@@ -34,3 +34,6 @@ Thumbs.db
 
 # Sequelize CLI
 .sequelizerc.bak
+
+# GitHub instructions
+.github/
