@@ -46,23 +46,28 @@ Una API REST para registro y autenticación de usuarios construida con Node.js, 
 ## ⚡ Instalación y Uso
 
 ### Prerrequisitos
+
 - Node.js (v18 o superior)
 - PostgreSQL
 - npm
 
 ### 1. Clonar el repositorio
+
 ```bash
 git clone <url-del-repositorio>
 cd api-auth
 ```
 
 ### 2. Instalar dependencias
+
 ```bash
 npm install
 ```
 
 ### 3. Configurar variables de entorno
+
 Crear archivo `.env` en la raíz:
+
 ```env
 DB_HOST=localhost
 DB_USER=postgres
@@ -72,6 +77,7 @@ DB_PORT=5432
 ```
 
 ### 4. Configurar base de datos
+
 ```bash
 # Crear base de datos
 sudo -u postgres createdb authdb
@@ -81,6 +87,7 @@ npx sequelize-cli db:migrate
 ```
 
 ### 5. Ejecutar la aplicación
+
 ```bash
 node src/index.js
 ```
@@ -90,6 +97,7 @@ El servidor estará disponible en `http://localhost:3001`
 ## 📡 API Endpoints
 
 ### Registro de Usuario
+
 ```http
 POST /api/auth/register
 Content-Type: application/json
@@ -103,6 +111,7 @@ Content-Type: application/json
 ```
 
 **Respuesta exitosa (201):**
+
 ```json
 {
   "success": true,
@@ -134,7 +143,7 @@ Content-Type: application/json
 
 ## 📝 Próximas Funcionalidades
 
-- [ ] Login de usuarios
+- [x] Login de usuarios ← COMPLETADO
 - [ ] Middleware de autenticación
 - [ ] Tokens JWT
 - [ ] Logout
