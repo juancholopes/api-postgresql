@@ -1,14 +1,12 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 
-// Función para registrar un nuevo usuario
+// Controller para registrar un nuevo usuario se hace: 
+// Validación de campos, utilización de bcrypt para la encriptación y creación del usuario
 const registerUser = async (req, res) => {
     try {
-        // 1. Extraer datos del request body
         const { name, email, password, phone } = req.body;
 
-        // 2. Validar que los campos requeridos estén presentes y no esten vacíos
-        // Se podría utilizar una librería como Joi o express-validator para validaciones más robustas
         if (!name || !email || !password) {
             return res.status(400).json({
                 success: false,
@@ -16,8 +14,7 @@ const registerUser = async (req, res) => {
             });
         }
 
-        // 3. Verificar si el usuario ya existe
-        const existingUser = await User.findOne({ where: { email } }); // Esto devuelve un true o false 
+        const existingUser = await User.findOne({ where: { email } }); 
         if (existingUser) {
             return res.status(409).json({
                 success: false,
@@ -25,11 +22,10 @@ const registerUser = async (req, res) => {
             });
         }
 
-        // 4. Hashear la contraseña
+
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        // 5. Crear el usuario en la base de datos
         const newUser = await User.create({
             name,
             email,
@@ -37,7 +33,6 @@ const registerUser = async (req, res) => {
             phone: phone || null
         });
 
-        // 6. Responder con éxito (sin enviar la contraseña)
         res.status(201).json({
             success: true,
             message: 'Usuario registrado exitosamente',

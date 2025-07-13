@@ -143,7 +143,7 @@ Content-Type: application/json
 
 ## 📝 Próximas Funcionalidades
 
-- [x] Login de usuarios ← COMPLETADO
+- [x] Login de usuarios
 - [ ] Middleware de autenticación
 - [ ] Tokens JWT
 - [ ] Logout
