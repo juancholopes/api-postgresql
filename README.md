@@ -92,13 +92,62 @@ npx sequelize-cli db:migrate
 node src/index.js
 ```
 
+
+## 📍 **Después de la sección "⚡ Instalación y Uso", agrega:**
+
+```markdown
+## 🔧 Comandos Útiles
+
+### PostgreSQL en WSL (Arch Linux)
+
+```bash
+# Crear directorio requerido para PostgreSQL
+sudo mkdir -p /run/postgresql && sudo chown postgres:postgres /run/postgresql
+
+# Iniciar PostgreSQL
+sudo -u postgres pg_ctl start -D /var/lib/postgres/data
+
+# Verificar estado
+sudo -u postgres pg_ctl status -D /var/lib/postgres/data
+
+# Detener PostgreSQL
+sudo -u postgres pg_ctl stop -D /var/lib/postgres/data
+
+```
+
+### Comandos de desarrollo con cURL 
+
+```bash
+# Registro de usuario
+curl -X POST http://localhost:3001/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Test User",
+    "email": "test@example.com", 
+    "password": "123456",
+    "phone": "555-0000"
+  }'
+```
+
+```bash
+# Login de usuario (obtener JWT)
+curl -X POST http://localhost:3001/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "password": "123456"
+  }' \
+  | jq .
+```
+
+
 El servidor estará disponible en `http://localhost:3001`
 
 ## 📡 API Endpoints
 
 ### Registro de Usuario
 
-```http
+```bash
 POST /api/auth/register
 Content-Type: application/json
 
@@ -125,6 +174,34 @@ Content-Type: application/json
 }
 ```
 
+### Login de Usuario 
+
+```bash
+POST /api/auth/login
+Content-Type: application/json 
+
+{
+  "email": "juan@example.com", 
+  "password": "123456"
+}
+```
+**Respuesta exitosa (200):**
+
+```js
+{
+  "success": true,
+  "message": "Inicio de sesión exitoso",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "name": "Juan Pérez",
+    "email": "juan@example.com",
+    "phone": "555-1234"
+  }
+}
+```
+
+
 ## 🔒 Seguridad
 
 - Las contraseñas se hashean con bcrypt (saltRounds: 10)
@@ -145,7 +222,7 @@ Content-Type: application/json
 
 - [x] Login de usuarios
 - [ ] Middleware de autenticación
-- [ ] Tokens JWT
+- [x] Tokens JWT
 - [ ] Logout
 - [ ] Actualización de perfil
 - [ ] Eliminación de cuenta
