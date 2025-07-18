@@ -1,11 +1,11 @@
-const bcrypt = require("bcrypt");
-const User = require("../models/user.model");
-const jwt = require("jsonwebtoken")
+import bcrypt from "bcrypt";
+import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 // Función para iniciar sesión de un usuario
 const loginUser = async (req, res) => {
   // Extraemos el email y la contraseña del request body
-  const { email, password, } = req.body;
+  const { email, password } = req.body;
 
   // Validamos que ambos existan
   if (!email || !password) {
@@ -34,14 +34,12 @@ const loginUser = async (req, res) => {
       });
     }
 
-
     // Generamos token JWT 
     const token = jwt.sign(
-    { id: user.id },
+      { id: user.id },
       process.env.JWT_SECRET,
-    { expiresIn: "1h" } // 1 hora
-);
-
+      { expiresIn: "1h" } // 1 hora
+    );
 
     // Si es correcta respondemos con exito
     res.status(200).json({
@@ -64,6 +62,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = {
-  loginUser,
-};
+export { loginUser };

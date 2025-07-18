@@ -1,5 +1,5 @@
-const {Sequelize, DataTypes} = require('sequelize'); // Importa Sequelize y DataTypes desde la librería sequelize para manejar la base de datos y definir modelos
-const sequelize = require('../db'); // Importa la instancia de Sequelize configurada desde db.js
+import { Sequelize, DataTypes } from 'sequelize'; // Importa Sequelize y DataTypes desde la librería sequelize para manejar la base de datos y definir modelos
+import sequelize from '../db.js'; // Importa la instancia de Sequelize configurada desde db.js
 
 // Definimos el modelo User utilizando sequelize.define()
 const User = sequelize.define('User', {
@@ -22,5 +22,5 @@ const User = sequelize.define('User', {
     }
 });
 
-module.exports = User; // Exporta el modelo para usarlo en otros archivos
+export default User; // Exporta el modelo para usarlo en otros archivos
 

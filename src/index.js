@@ -1,9 +1,11 @@
-const express = require('express'); // Importa express como un framework para crear el servidor
+import express from 'express'; // Importa express como un framework para crear el servidor
+import dotenv from 'dotenv'; // Importa dotenv para variables de entorno
+import authRoutes from './routes/auth.routes.js'; // Importar las rutas
+
+dotenv.config(); // Carga las variables de entorno
+
 const app = express(); // Crea una instancia de express para manejar las peticiones HTTP en general se le nombra app
 const port = 3001; // Se define el puerto en el que se estará corriendo el servidor puede ser cualquier puerto que no esté en uso
-
-// Importar las rutas
-const authRoutes = require('./routes/auth.routes');
 
 // Middleware para aceptar JSON en request 
 app.use(express.json());

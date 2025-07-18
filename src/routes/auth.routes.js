@@ -1,15 +1,18 @@
-const express = require("express");
+import express from "express";
+import { registerUser } from "../controllers/register.controller.js";
+import { loginUser } from "../controllers/login.controller.js";
+import { profileUser } from "../controllers/profile.controller.js";
+
 const router = express.Router(); // Creamos un router de Express
-const authController = require("../controllers/register.controller"); // Importamos el controller
-const loginController = require("../controllers/login.controller"); // Importamos el controller de login
 
 // Ruta POST para registrar un nuevo usuario
-router.post("/register", authController.registerUser);
+router.post("/register", registerUser);
 
 // Ruta POST para iniciar sesión
-router.post("/login", loginController.loginUser);
+router.post("/login", loginUser);
 
-// Aquí podemos agregar más rutas de autenticación en el futuro
-// router.post('/logout', authController.logoutUser);
+// Ruta GET para profile
+router.get("/profile", profileUser)
 
-module.exports = router; // Exportamos el router para usarlo en index.js
+// Exportamos el router para usarlo en index.js
+export default router;

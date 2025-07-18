@@ -1,5 +1,6 @@
-const { Sequelize } = require('sequelize'); // Importa Sequelize para manejar la base de datos con ORM
-require('dotenv').config(); // Carga las variables de entorno desde el archivo .env
+import { Sequelize } from 'sequelize'; // Importa Sequelize para manejar la base de datos con ORM
+import dotenv from 'dotenv'; // Importa dotenv para manejar variables de entorno
+dotenv.config(); // Carga las variables de entorno desde el archivo .env
 
 // Configuramos la conexión de la base de datos con Sequelize
 const sequelize = new Sequelize(
@@ -14,4 +15,4 @@ const sequelize = new Sequelize(
     }
 );
 
-module.exports = sequelize; // Exporta la instancia de Sequelize para que pueda ser utilizada en otros archivos
+export default sequelize; // Exporta la instancia de Sequelize para que pueda ser utilizada en otros archivos

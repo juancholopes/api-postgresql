@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
-const User = require('../models/user.model');
+import bcrypt from 'bcrypt';
+import User from '../models/user.model.js';
 
 // Controller para registrar un nuevo usuario se hace: 
 // Validación de campos, utilización de bcrypt para la encriptación y creación del usuario
@@ -21,7 +21,6 @@ const registerUser = async (req, res) => {
                 message: 'El email ya está registrado'
             });
         }
-
 
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -53,6 +52,4 @@ const registerUser = async (req, res) => {
     }
 };
 
-module.exports = {
-    registerUser
-};
+export { registerUser };
