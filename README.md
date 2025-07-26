@@ -28,9 +28,11 @@ A REST API for user registration and authentication built with Node.js, Express.
 
 ```
 .
+├── .env.example
 ├── package.json
 ├── package-lock.json
 ├── README.md
+├── .sequelizerc
 └── src
     ├── config
     │   └── config.json
