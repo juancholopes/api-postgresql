@@ -1,151 +1,166 @@
-# Authentication API bulding with Node.js y PostgreSQL
 
-A API REST for register and authentication from users building with Node.js, Express.js, Sequelize y PostgreSQL.
+
+# Authentication API built with Node.js and PostgreSQL
+
+A REST API for user registration and authentication built with Node.js, Express.js, Sequelize, and PostgreSQL.
 
 ## 🚀 Features
 
-- ✅ Registro de usuarios con validación
-- ✅ Encriptación de contraseñas con bcrypt
-- ✅ Base de datos PostgreSQL con Sequelize ORM
-- ✅ Migraciones de base de datos
-- ✅ Arquitectura limpia (Clean Architecture)
-- ✅ Separación de responsabilidades (Routes, Controllers, Models)
-- ✅ Códigos de estado HTTP apropiados
-- ✅ Validación de datos de entrada
+- ✅ User registration with validation
+- ✅ Password encryption with bcrypt
+- ✅ PostgreSQL database with Sequelize ORM
+- ✅ Database migrations
+- ✅ Clean Architecture
+- ✅ Separation of concerns (Routes, Controllers, Models)
+- ✅ Proper HTTP status codes
+- ✅ Input data validation
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Technologies Used
 
-- **Node.js** - Runtime de JavaScript
-- **Express.js** - Framework web
-- **PostgreSQL** - Base de datos
-- **Sequelize** - ORM para base de datos
-- **bcrypt** - Encriptación de contraseñas
-- **dotenv** - Variables de entorno
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web framework
+- **PostgreSQL** - Database
+- **Sequelize** - ORM for database
+- **bcrypt** - Password encryption
+- **dotenv** - Environment variables
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 ├── src/
 │   ├── controllers/
-│   │   └── auth.controller.js    # Lógica de negocio
+│   │   └── auth.controller.js    # Business logic
 │   ├── routes/
-│   │   └── auth.routes.js        # Definición de rutas
+│   │   └── auth.routes.js        # Route definitions
 │   ├── models/
-│   │   └── user.model.js         # Modelo de usuario
+│   │   └── user.model.js         # User model
 │   ├── migrations/
-│   │   └── create-users-table.js # Migración de tabla usuarios
+│   │   └── create-users-table.js # User table migration
 │   ├── config/
-│   │   └── config.json           # Configuración de base de datos
-│   ├── db.js                     # Conexión a base de datos
-│   └── index.js                  # Punto de entrada
-├── .env                          # Variables de entorno
-├── .sequelizerc                  # Configuración de Sequelize
+│   │   └── config.json           # Database configuration
+│   ├── db.js                     # Database connection
+│   └── index.js                  # Entry point
+├── .env                          # Environment variables
+├── .sequelizerc                  # Sequelize configuration
 └── package.json
 ```
 
-## ⚡ Instalación y Uso
+## ⚡ Installation and Usage
 
-### Prerrequisitos
+### Prerequisites
 
-- Node.js (v18 o superior)
+- Node.js (v18 or higher)
 - PostgreSQL
 - npm
 
-### 1. Clonar el repositorio
+### 1. Clone the repository
 
 ```bash
-git clone <url-del-repositorio>
+git clone <repository-url>
 cd api-auth
 ```
 
-### 2. Instalar dependencias
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Configurar variables de entorno
+### 3. Configure environment variables
 
-Crear archivo `.env` en la raíz:
+Create a `.env` file in the root:
 
 ```env
 DB_HOST=localhost
 DB_USER=postgres
-DB_PASSWORD=tu_password
+DB_PASSWORD=your_password
 DB_NAME=authdb
 DB_PORT=5432
 ```
 
-### 4. Configurar base de datos
+### 4. Set up the database
 
 ```bash
-# Crear base de datos
+# Create the database
 sudo -u postgres createdb authdb
 
-# Ejecutar migraciones
+# Run migrations
 npx sequelize-cli db:migrate
 ```
 
-### 5. Ejecutar la aplicación
+### 5. Run the application
 
 ```bash
 node src/index.js
 ```
 
 
-## 📍 **Después de la sección "⚡ Instalación y Uso", agrega:**
+## � Useful Commands
 
-```markdown
-## 🔧 Comandos Útiles
-
-### PostgreSQL en WSL (Arch Linux)
+### PostgreSQL on WSL (Arch Linux)
 
 ```bash
-# Crear directorio requerido para PostgreSQL
+# Create required directory for PostgreSQL
 sudo mkdir -p /run/postgresql && sudo chown postgres:postgres /run/postgresql
 
-# Iniciar PostgreSQL
+# Start PostgreSQL
 sudo -u postgres pg_ctl start -D /var/lib/postgres/data
 
-# Verificar estado
+# Check status
 sudo -u postgres pg_ctl status -D /var/lib/postgres/data
 
-# Detener PostgreSQL
+# Stop PostgreSQL
 sudo -u postgres pg_ctl stop -D /var/lib/postgres/data
-
 ```
 
-### Comandos de desarrollo con cURL 
+### Development commands with cURL
 
 ```bash
-# Registro de usuario
+# User registration
 curl -X POST http://localhost:3001/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test User",
-    "email": "test@example.com", 
+    "email": "test@example.com",
     "password": "123456",
     "phone": "555-0000"
   }'
-```
 
-```bash
-# Login de usuario (obtener JWT)
+# User login (get JWT)
 curl -X POST http://localhost:3001/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",
     "password": "123456"
-  }' \
-  | jq .
+  }'
+
+# Get profile (replace <TOKEN> with your JWT)
+curl -X GET http://localhost:3001/api/auth/profile \
+  -H "Authorization: Bearer <TOKEN>"
+
+# Update profile
+curl -X PUT http://localhost:3001/api/auth/account \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Updated User",
+    "phone": "555-1111"
+  }'
+
+# Delete account
+curl -X DELETE http://localhost:3001/api/auth/delete \
+  -H "Authorization: Bearer <TOKEN>"
+
+# Logout
+curl -X POST http://localhost:3001/api/auth/logout \
+  -H "Authorization: Bearer <TOKEN>"
 ```
 
-
-El servidor estará disponible en `http://localhost:3001`
+The server will be available at `http://localhost:3001`
 
 ## 📡 API Endpoints
 
-### Registro de Usuario
+### User Registration
 
 ```bash
 POST /api/auth/register
@@ -159,12 +174,12 @@ Content-Type: application/json
 }
 ```
 
-**Respuesta exitosa (201):**
+**Successful response (201):**
 
 ```json
 {
   "success": true,
-  "message": "Usuario registrado exitosamente",
+  "message": "User registered successfully",
   "user": {
     "id": 1,
     "name": "Juan Pérez",
@@ -174,23 +189,23 @@ Content-Type: application/json
 }
 ```
 
-### Login de Usuario 
+### User Login
 
 ```bash
 POST /api/auth/login
-Content-Type: application/json 
+Content-Type: application/json
 
 {
-  "email": "juan@example.com", 
+  "email": "juan@example.com",
   "password": "123456"
 }
 ```
-**Respuesta exitosa (200):**
+**Successful response (200):**
 
-```js
+```json
 {
   "success": true,
-  "message": "Inicio de sesión exitoso",
+  "message": "Login successful",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
     "id": 1,
@@ -201,36 +216,30 @@ Content-Type: application/json
 }
 ```
 
+## 🔒 Security
 
-## 🔒 Seguridad
+- Passwords are hashed with bcrypt (saltRounds: 10)
+- Passwords are never returned in responses
+- Unique email validation
+- Required fields validation
 
-- Las contraseñas se hashean con bcrypt (saltRounds: 10)
-- Las contraseñas nunca se devuelven en las respuestas
-- Validación de email único
-- Validación de campos requeridos
+## 🧠 Applied Concepts
 
-## 🧠 Conceptos Aplicados
+- **Clean Architecture**: Clear separation between routes, controllers, and models
+- **ORM**: Using Sequelize for database abstraction
+- **Migrations**: Database schema version control
+- **Password hashing**: Security with bcrypt and salt
+- **REST API**: Endpoints following REST conventions
+- **HTTP Codes**: Proper use of status codes
 
-- **Clean Architecture**: Separación clara entre rutas, controladores y modelos
-- **ORM**: Uso de Sequelize para abstracción de base de datos
-- **Migraciones**: Control de versiones del esquema de base de datos
-- **Hash de contraseñas**: Seguridad con bcrypt y salt
-- **REST API**: Endpoints siguiendo convenciones REST
-- **Códigos HTTP**: Uso apropiado de códigos de estado
+## 📝 Next Features
 
-## 📝 Próximas Funcionalidades
+- [x] User login
+- [x] Authentication middleware
+- [x] JWT tokens
+- [x] Logout
+- [x] Profile update
+- [x] Account deletion
+- [ ] Rate Limiting
 
-- [x] Login de usuarios
-- [x] Middleware de autenticación
-- [x] Tokens JWT
-- [ ] Logout
-- [ ] Actualización de perfil
-- [ ] Eliminación de cuenta
-
-## 🤝 Contribuciones
-
-Este es un proyecto de aprendizaje. ¡Las mejoras y sugerencias son bienvenidas!
-
----
-
-**Desarrollado como proyecto de aprendizaje de desarrollo backend con Node.js**
+**Developed as a backend development learning project with Node.js**

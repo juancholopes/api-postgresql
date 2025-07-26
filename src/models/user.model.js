@@ -22,5 +22,5 @@ const User = sequelize.define('User', {
     }
 });
 
-export default User; // Exporta el modelo para usarlo en otros archivos
+export default User; 
 

@@ -1,4 +1,4 @@
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 
 // Función para eliminar la cuenta de un usuario
 const deleteAccountController = async (req, res) => {

@@ -18,7 +18,7 @@ const registerUser = async (req, res) => {
         if (existingUser) {
             return res.status(409).json({
                 success: false,
-                message: 'No se pudo completar la operación'
+                message: 'El correo electrónico ya está en uso'
             });
         }
 

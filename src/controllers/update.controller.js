@@ -1,4 +1,4 @@
-import User from "../models/user.model";
+import User from '../models/user.model.js'
 import bcrypt from 'bcrypt';
 
 const updateProfileController = async (req, res) => {
