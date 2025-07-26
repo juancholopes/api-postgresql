@@ -27,22 +27,30 @@ A REST API for user registration and authentication built with Node.js, Express.
 ## 📁 Project Structure
 
 ```
-├── src/
-│   ├── controllers/
-│   │   └── auth.controller.js    # Business logic
-│   ├── routes/
-│   │   └── auth.routes.js        # Route definitions
-│   ├── models/
-│   │   └── user.model.js         # User model
-│   ├── migrations/
-│   │   └── create-users-table.js # User table migration
-│   ├── config/
-│   │   └── config.json           # Database configuration
-│   ├── db.js                     # Database connection
-│   └── index.js                  # Entry point
-├── .env                          # Environment variables
-├── .sequelizerc                  # Sequelize configuration
-└── package.json
+.
+├── package.json
+├── package-lock.json
+├── README.md
+└── src
+    ├── config
+    │   └── config.json
+    ├── controllers
+    │   ├── delete.controller.js
+    │   ├── login.controller.js
+    │   ├── logout.controller.js
+    │   ├── profile.controller.js
+    │   ├── register.controller.js
+    │   └── update.controller.js
+    ├── db.js
+    ├── index.js
+    ├── middleware
+    │   └── auth.js
+    ├── migrations
+    │   └── 20250709233401-create-users-table.js
+    ├── models
+    │   └── user.model.js
+    └── routes
+        └── auth.routes.js
 ```
 
 ## ⚡ Installation and Usage
