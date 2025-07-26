@@ -1,8 +1,8 @@
-# API de Autenticación con Node.js y PostgreSQL
+# Authentication API bulding with Node.js y PostgreSQL
 
-Una API REST para registro y autenticación de usuarios construida con Node.js, Express.js, Sequelize y PostgreSQL.
+A API REST for register and authentication from users building with Node.js, Express.js, Sequelize y PostgreSQL.
 
-## 🚀 Características
+## 🚀 Features
 
 - ✅ Registro de usuarios con validación
 - ✅ Encriptación de contraseñas con bcrypt
@@ -221,7 +221,7 @@ Content-Type: application/json
 ## 📝 Próximas Funcionalidades
 
 - [x] Login de usuarios
-- [ ] Middleware de autenticación
+- [x] Middleware de autenticación
 - [x] Tokens JWT
 - [ ] Logout
 - [ ] Actualización de perfil

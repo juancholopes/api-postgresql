@@ -11,7 +11,7 @@ const loginUser = async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({
       success: false,
-      message: "Email y contraseña son requeridos",
+      message: "Datos inválidos",
     });
   }
 
@@ -21,7 +21,7 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Credenciales incorrectas",
+        message: "Acceso denegado",
       });
     }
 
@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
     // Si es correcta respondemos con exito
     res.status(200).json({
       success: true,
-      message: "Inicio de sesión exitoso",
+      message: "Operación realizada correctamente",
       token: token,
       user: {
         id: user.id,

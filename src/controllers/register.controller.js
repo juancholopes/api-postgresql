@@ -10,7 +10,7 @@ const registerUser = async (req, res) => {
         if (!name || !email || !password) {
             return res.status(400).json({
                 success: false,
-                message: 'Nombre, email y contraseña son requeridos'
+                message: 'Datos inválidos'
             });
         }
 
@@ -18,7 +18,7 @@ const registerUser = async (req, res) => {
         if (existingUser) {
             return res.status(409).json({
                 success: false,
-                message: 'El email ya está registrado'
+                message: 'No se pudo completar la operación'
             });
         }
 
@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 
         res.status(201).json({
             success: true,
-            message: 'Usuario registrado exitosamente',
+            message: 'Operación realizada correctamente',
             user: {
                 id: newUser.id,
                 name: newUser.name,
