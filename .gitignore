@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 
+# Node and Bun 
+pnpm-lock.yaml
+
+
 # Environment variables
 .env
 
