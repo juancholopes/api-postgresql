@@ -10,7 +10,8 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST, // Host donde se encuentra la base de datos
         port: process.env.DB_PORT, // Puerto de PostgreSQL
-        dialect: 'postgres', // Especifica que usamos PostgreSQL
+        dialect: process.env.DB_DIALECT || 'postgres', // Especifica el dialecto (postgres por defecto)
+        storage: process.env.DB_DIALECT === 'sqlite' ? './database.sqlite' : undefined, // Para SQLite
         logging: false, // Desactiva los logs SQL en consola 
     }
 );
