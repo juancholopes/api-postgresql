@@ -647,6 +647,8 @@ Al principio tenía toda la lógica en las rutas. Extraerla a controladores hizo
 
 Este proyecto fue desarrollado como parte de mi aprendizaje de desarrollo backend con Node.js. Si encuentras errores o tienes sugerencias, son bienvenidas.
 
-**Desarrollado por:** Juan Carlos Lopez Moreno
+**Desarrollado por:** Juan Carlos López Moreno
+
+**Portafolio:** https://juancholopez.netlify.app/
 
 **Propósito:** Proyecto de aprendizaje y demostración de habilidades backend para aplicaciones a posiciones junior/semi-senior en desarrollo web.
