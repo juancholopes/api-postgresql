@@ -6,8 +6,6 @@ API REST de autenticación que resuelve el problema de gestión segura de usuari
 
 ### Problema que Resuelve
 
-En muchas aplicaciones pequeñas y medianas, implementar un sistema de autenticación desde cero puede ser complejo y propenso a errores de seguridad. Este proyecto proporciona una base sólida para:
-
 - Gestionar credenciales de usuarios de forma segura
 - Controlar el acceso mediante tokens JWT
 - Mantener la persistencia de datos de usuario
@@ -24,19 +22,20 @@ En muchas aplicaciones pequeñas y medianas, implementar un sistema de autentica
 - [Estimaciones de Tiempo](#estimaciones-de-tiempo)
 - [Reflexiones y Mejoras Futuras](#reflexiones-y-mejoras-futuras)
 - [Seguridad](#seguridad)
+- [Testing](#testing)
 
 ---
 
 ## Tecnologías y Decisiones Técnicas
 
-| Tecnología | Versión | Razón de Elección |
-|------------|---------|-------------------|
-| **Node.js** | v18+ | Runtime asíncrono ideal para operaciones I/O intensivas como consultas a base de datos |
-| **Express.js** | v5.1.0 | Framework minimalista que permite flexibilidad en la estructura sin imponer convenciones rígidas |
-| **PostgreSQL** | v8+ | Base de datos relacional elegida por su robustez en integridad de datos y soporte ACID |
-| **Sequelize** | v6.37.7 | ORM que facilita migraciones y abstrae operaciones SQL, haciendo el código más mantenible |
-| **bcrypt** | v6.0.0 | Algoritmo de hashing específicamente diseñado para contraseñas, con protección contra ataques de fuerza bruta |
-| **jsonwebtoken** | v9.0.2 | Estándar de industria para autenticación stateless en APIs REST |
+| Tecnología       | Versión | Razón de Elección                                                                                             |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| **Node.js**      | v18+    | Runtime asíncrono ideal para operaciones I/O intensivas como consultas a base de datos                        |
+| **Express.js**   | v5.1.0  | Framework minimalista que permite flexibilidad en la estructura sin imponer convenciones rígidas              |
+| **PostgreSQL**   | v8+     | Base de datos relacional elegida por su robustez en integridad de datos y soporte ACID                        |
+| **Sequelize**    | v6.37.7 | ORM que facilita migraciones y abstrae operaciones SQL, haciendo el código más mantenible                     |
+| **bcrypt**       | v6.0.0  | Algoritmo de hashing específicamente diseñado para contraseñas, con protección contra ataques de fuerza bruta |
+| **jsonwebtoken** | v9.0.2  | Estándar de industria para autenticación stateless en APIs REST                                               |
 
 ### ¿Por qué PostgreSQL y no MongoDB?
 
@@ -175,6 +174,7 @@ npm start
 El servidor estará disponible en `http://localhost:3001`
 
 **Verificación:** Deberías ver en consola:
+
 ```
 ✅ Conexión a PostgreSQL establecida correctamente
 Servidor escuchando en http://localhost:3001
@@ -219,6 +219,7 @@ curl -X POST http://localhost:3001/api/auth/register \
 ```
 
 **Validaciones implementadas:**
+
 - Email debe ser único en la base de datos
 - Contraseña se hashea con bcrypt (10 salt rounds) antes de almacenar
 - Campos requeridos: name, email, password
@@ -359,16 +360,16 @@ curl -X POST http://localhost:3001/api/auth/logout \
 
 ### Tiempo de Desarrollo por Funcionalidad
 
-| Funcionalidad | Tiempo Estimado | Tiempo Real | Dificultad Principal |
-|---------------|----------------|-------------|----------------------|
-| Configuración inicial del proyecto | 1 hora | 1.5 horas | Configuración de Sequelize con ES modules |
-| Modelo de usuario + migraciones | 2 horas | 2 horas | Definición del esquema y validaciones |
-| Endpoint de registro | 3 horas | 4 horas | Validación de email único y hashing de contraseñas |
-| Endpoint de login + JWT | 4 horas | 5 horas | Generación y configuración de JWT |
-| Middleware de autenticación | 2 horas | 2.5 horas | Manejo de errores y validación de token |
-| Endpoints de perfil, actualización y eliminación | 3 horas | 3 horas | Extracción del userId del token |
-| Testing manual con cURL | 1 hora | 1 hora | Documentación de ejemplos |
-| **Total** | **16 horas** | **19 horas** | - |
+| Funcionalidad                                    | Tiempo Estimado | Tiempo Real  | Dificultad Principal                               |
+| ------------------------------------------------ | --------------- | ------------ | -------------------------------------------------- |
+| Configuración inicial del proyecto               | 1 hora          | 1.5 horas    | Configuración de Sequelize con ES modules          |
+| Modelo de usuario + migraciones                  | 2 horas         | 2 horas      | Definición del esquema y validaciones              |
+| Endpoint de registro                             | 3 horas         | 4 horas      | Validación de email único y hashing de contraseñas |
+| Endpoint de login + JWT                          | 4 horas         | 5 horas      | Generación y configuración de JWT                  |
+| Middleware de autenticación                      | 2 horas         | 2.5 horas    | Manejo de errores y validación de token            |
+| Endpoints de perfil, actualización y eliminación | 3 horas         | 3 horas      | Extracción del userId del token                    |
+| Testing manual con cURL                          | 1 hora          | 1 hora       | Documentación de ejemplos                          |
+| **Total**                                        | **16 horas**    | **19 horas** | -                                                  |
 
 ### Estimaciones de Nuevas Funcionalidades
 
@@ -377,6 +378,7 @@ curl -X POST http://localhost:3001/api/auth/logout \
 **Tiempo estimado:** 3-4 horas
 
 **Pasos:**
+
 1. Instalar `express-rate-limit` (15 min)
 2. Configurar límites por endpoint (1 hora)
 3. Implementar límites específicos para login/registro (1 hora)
@@ -389,6 +391,7 @@ curl -X POST http://localhost:3001/api/auth/logout \
 **Tiempo estimado:** 8-10 horas
 
 **Pasos:**
+
 1. Crear tabla de tokens de recuperación (1 hora)
 2. Endpoint para solicitar recuperación (2 horas)
 3. Integración con servicio de email (3-4 horas)
@@ -402,6 +405,7 @@ curl -X POST http://localhost:3001/api/auth/logout \
 **Tiempo estimado:** 6-8 horas
 
 **Pasos:**
+
 1. Crear tabla de refresh tokens (1 hora)
 2. Modificar login para generar refresh token (2 horas)
 3. Endpoint para renovar access token (2 horas)
@@ -436,17 +440,18 @@ curl -X POST http://localhost:3001/api/auth/logout \
 
 ```javascript
 // Ejemplo de lo que implementaría:
-import { z } from 'zod';
+import { z } from "zod";
 
 const registerSchema = z.object({
   name: z.string().min(2).max(50),
   email: z.string().email(),
   password: z.string().min(6),
-  phone: z.string().optional()
+  phone: z.string().optional(),
 });
 ```
 
 **Beneficios:**
+
 - Validaciones centralizadas y reutilizables
 - Mensajes de error consistentes
 - TypeScript-friendly (si migro a TS en el futuro)
@@ -463,23 +468,22 @@ const registerSchema = z.object({
 
 ```javascript
 // Ejemplo de test que implementaría:
-describe('POST /api/auth/register', () => {
-  it('debería registrar un usuario con datos válidos', async () => {
-    const response = await request(app)
-      .post('/api/auth/register')
-      .send({
-        name: 'Test User',
-        email: 'test@example.com',
-        password: '123456'
-      });
-    
+describe("POST /api/auth/register", () => {
+  it("debería registrar un usuario con datos válidos", async () => {
+    const response = await request(app).post("/api/auth/register").send({
+      name: "Test User",
+      email: "test@example.com",
+      password: "123456",
+    });
+
     expect(response.status).toBe(201);
-    expect(response.body.user.email).toBe('test@example.com');
+    expect(response.body.user.email).toBe("test@example.com");
   });
 });
 ```
 
 **Cobertura objetivo:**
+
 - Tests unitarios para controladores (8 horas)
 - Tests de integración para endpoints (6 horas)
 - Tests para middleware de autenticación (2 horas)
@@ -493,6 +497,7 @@ describe('POST /api/auth/register', () => {
 **Problema actual:** JavaScript sin tipado puede llevar a errores en tiempo de ejecución que serían detectables en tiempo de desarrollo con TypeScript.
 
 **Beneficios de TypeScript:**
+
 - Autocompletado mejorado en el IDE
 - Detección temprana de errores de tipo
 - Mejor documentación implícita del código
@@ -518,7 +523,7 @@ services:
       POSTGRES_DB: authdb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-  
+
   api:
     build: .
     ports:
@@ -528,6 +533,7 @@ services:
 ```
 
 **Beneficios:**
+
 - Entorno consistente entre desarrollo y producción
 - Instalación simplificada: un solo comando `docker-compose up`
 - Fácil de desplegar en servicios cloud
@@ -585,6 +591,322 @@ Cualquier usuario puede registrarse con un email sin confirmar que le pertenece.
 La aplicación corre en HTTP sin cifrado. En producción, los tokens podrían ser interceptados.
 
 **Solución:** Desplegar detrás de un reverse proxy (Nginx) con certificado SSL/TLS.
+
+---
+
+## Testing
+
+### Descripción General
+
+El proyecto incluye una suite completa de tests automatizados implementada con **Jest** y **Supertest**. Los tests cubren todos los endpoints de la API y el middleware de autenticación, asegurando el correcto funcionamiento de las operaciones y la detección temprana de errores.
+
+### Tecnologías de Testing
+
+| Tecnología    | Versión | Propósito                                                       |
+| ------------- | ------- | --------------------------------------------------------------- |
+| **Jest**      | v30.2.0 | Framework de testing con aserciones y mocks                     |
+| **Supertest** | v7.2.2  | Librería para testing de APIs HTTP                              |
+| **cross-env** | v10.1.0 | Configuración de variables de entorno multiplataforma           |
+
+### Estructura de Tests
+
+```
+tests/
+├── setup/
+│   ├── testDb.js          # Configuración de base de datos de prueba
+│   ├── testSetup.js       # Configuración global de Jest (beforeAll, afterAll)
+│   ├── testUtils.js       # Funciones auxiliares (createUser, getToken, etc.)
+│   └── testApp.js         # Instancia de Express para testing
+├── auth/
+│   ├── register.test.js   # Tests del endpoint de registro
+│   ├── login.test.js      # Tests del endpoint de login
+│   ├── profile.test.js    # Tests del endpoint de perfil
+│   ├── update.test.js     # Tests del endpoint de actualización
+│   ├── delete.test.js     # Tests del endpoint de eliminación
+│   └── logout.test.js     # Tests del endpoint de logout
+└── middleware/
+    └── auth.test.js       # Tests del middleware de autenticación
+```
+
+### Configuración de Base de Datos de Prueba
+
+Los tests utilizan una base de datos PostgreSQL separada llamada `authdb_test` para evitar afectar los datos de desarrollo o producción.
+
+**Archivo `.env.test`:**
+
+```env
+DB_HOST=localhost
+DB_USER=postgres
+DB_PASSWORD=tu_contraseña
+DB_NAME=authdb_test
+DB_DIALECT=postgres
+DB_PORT=5432
+JWT_SECRET=testsecretkey123
+NODE_ENV=test
+```
+
+**Crear base de datos de prueba:**
+
+```bash
+npm run test:db:create
+```
+
+**Eliminar base de datos de prueba:**
+
+```bash
+npm run test:db:drop
+```
+
+### Ejecutar Tests
+
+#### Ejecutar todos los tests
+
+```bash
+npm test
+```
+
+#### Ejecutar tests en modo watch (re-ejecución automática)
+
+```bash
+npm run test:watch
+```
+
+#### Ejecutar tests con reporte de cobertura
+
+```bash
+npm run test:coverage
+```
+
+Este comando genera un reporte detallado de cobertura en:
+- **Consola:** Resumen de cobertura por archivo
+- **HTML:** `coverage/lcov-report/index.html` (reporte interactivo)
+- **LCOV:** `coverage/lcov.info` (para integración con CI/CD)
+
+#### Ejecutar tests con salida detallada
+
+```bash
+npm run test:verbose
+```
+
+### Cobertura de Tests
+
+Los tests incluyen cobertura completa para cada endpoint:
+
+#### Register (POST /api/auth/register)
+- ✅ Registro exitoso con todos los campos
+- ✅ Registro con campos mínimos requeridos
+- ✅ Hashing de contraseña verificado
+- ❌ Validación de campos faltantes (name, email, password)
+- ❌ Detección de email duplicado
+- ✅ Estructura de respuesta validada
+
+#### Login (POST /api/auth/login)
+- ✅ Login exitoso con credenciales válidas
+- ✅ Token JWT válido generado
+- ✅ Información del usuario retornada sin contraseña
+- ❌ Usuario no existente
+- ❌ Contraseña incorrecta
+- ❌ Campos faltantes
+
+#### Profile (GET /api/auth/profile)
+- ✅ Obtención exitosa del perfil
+- ✅ Datos correctos del usuario autenticado
+- ❌ Token ausente o inválido
+- ❌ Usuario no encontrado en BD
+
+#### Update (PUT /api/auth/account)
+- ✅ Actualización de nombre
+- ✅ Actualización de teléfono
+- ✅ Actualización de múltiples campos
+- ✅ Actualización de contraseña con hashing
+- ❌ Token ausente o inválido
+
+#### Delete (DELETE /api/auth/delete)
+- ✅ Eliminación exitosa de cuenta
+- ✅ Usuario removido de la base de datos
+- ❌ Token ausente o inválido
+
+#### Logout (POST /api/auth/logout)
+- ✅ Logout exitoso
+- ❌ Token ausente o inválido
+- ⚠️ Limitación conocida: Token sigue siendo válido (limitación JWT)
+
+#### Auth Middleware
+- ✅ Token válido permite acceso
+- ✅ userId adjuntado al request
+- ❌ Header Authorization ausente
+- ❌ Token malformado
+- ❌ Token expirado
+- ❌ Token con firma incorrecta
+
+### Utilidades de Testing
+
+El archivo `tests/setup/testUtils.js` proporciona funciones auxiliares reutilizables:
+
+```javascript
+// Crear usuario de prueba
+const testUser = await createTestUser({
+  name: 'Usuario de Prueba',
+  email: 'test@example.com',
+  password: 'password123'
+});
+
+// Obtener token de autenticación
+const token = getAuthToken(testUser.id);
+
+// Generar token expirado (para tests negativos)
+const expiredToken = generateExpiredToken(testUser.id);
+
+// Generar token inválido
+const invalidToken = generateInvalidToken();
+
+// Limpiar base de datos
+await clearDatabase();
+
+// Crear múltiples usuarios
+const users = await createMultipleUsers(5);
+```
+
+### Escribir Nuevos Tests
+
+Para agregar tests para nuevas funcionalidades:
+
+1. **Crear archivo de test:** `tests/nueva-funcionalidad.test.js`
+2. **Importar dependencias:**
+
+```javascript
+import request from 'supertest';
+import createTestApp from '../setup/testApp.js';
+import { createTestUser, getAuthToken } from '../setup/testUtils.js';
+
+const app = createTestApp();
+
+describe('NUEVO ENDPOINT', () => {
+  describe('Casos exitosos', () => {
+    it('debería hacer algo exitosamente', async () => {
+      const response = await request(app)
+        .get('/api/nuevo-endpoint')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+    });
+  });
+
+  describe('Casos de error', () => {
+    it('debería retornar error en caso X', async () => {
+      // Test de error
+    });
+  });
+});
+```
+
+### Mejores Prácticas
+
+1. **Aislamiento:** Cada test es independiente y limpia la BD después de ejecutarse
+2. **Nomenclatura:** Usar español para descripciones de tests
+3. **Organización:** Agrupar tests en "Casos exitosos" y "Casos de error"
+4. **Cobertura:** Mantener mínimo 70% de cobertura de código
+5. **Velocidad:** Los tests deben ejecutarse rápidamente (< 10 segundos total)
+6. **Mantenibilidad:** Usar las utilidades de `testUtils.js` para evitar duplicación
+
+### Integración con CI/CD
+
+Los tests están diseñados para integrarse con pipelines de CI/CD:
+
+```yaml
+# Ejemplo para GitHub Actions
+- name: Run tests
+  run: npm test
+
+- name: Upload coverage
+  uses: codecov/codecov-action@v3
+  with:
+    file: ./coverage/lcov.info
+```
+
+### Reporte de Cobertura
+
+**Cobertura objetivo:** 70% mínimo en todas las métricas
+
+| Métrica      | Mínimo | Ideal |
+| ------------ | ------ | ----- |
+| Statements   | 70%    | 85%   |
+| Branches     | 70%    | 80%   |
+| Functions    | 70%    | 85%   |
+| Lines        | 70%    | 85%   |
+
+**Ver cobertura actual:**
+
+```bash
+npm run test:coverage
+```
+
+El reporte HTML muestra:
+- Archivos con menor cobertura
+- Líneas no cubiertas
+- Branches no testeados
+- Funciones sin tests
+
+### Troubleshooting
+
+#### Error: "Test database connection failed"
+
+**Solución:** Verificar que PostgreSQL esté corriendo y la BD `authdb_test` exista:
+
+```bash
+psql -U postgres -l | grep authdb_test
+```
+
+Si no existe:
+
+```bash
+npm run test:db:create
+```
+
+#### Error: "JWT_SECRET is not defined"
+
+**Solución:** Verificar que `.env.test` exista y contenga `JWT_SECRET`:
+
+```bash
+cat .env.test
+```
+
+#### Tests muy lentos
+
+**Solución:** Los tests pueden tardar más si:
+- La BD no está en localhost
+- Hay muchas conexiones abiertas
+- Los logs de Sequelize están activados
+
+Verificar configuración en `tests/setup/testDb.js` (logging: false).
+
+#### Tests fallan intermitentemente
+
+**Posibles causas:**
+- Datos no limpiados entre tests
+- IDs o timestamps que colisionan
+- Tests ejecutándose en paralelo que comparten datos
+
+**Solución:** Asegurar que `afterEach` limpie la base de datos correctamente.
+
+### Beneficios de esta Implementación
+
+1. **Detección temprana de errores:** Los tests detectan bugs antes de llegar a producción
+2. **Refactoring seguro:** Los tests garantizan que cambios no rompan funcionalidad existente
+3. **Documentación viva:** Los tests documentan el comportamiento esperado de la API
+4. **Confianza en deployments:** Saber que el código está probado reduce riesgos
+5. **Escalabilidad:** La estructura permite agregar nuevos tests fácilmente
+6. **Mantenibilidad:** Tests bien organizados son fáciles de mantener y actualizar
+
+### Próximos Pasos en Testing
+
+- [ ] Implementar tests de integración con base de datos real
+- [ ] Agregar tests de performance con Artillery o k6
+- [ ] Implementar mutation testing con Stryker
+- [ ] Configurar SonarQube para análisis de código
+- [ ] Agregar tests E2E con Cypress o Playwright
+- [ ] Mocking de servicios externos (email, SMS, etc.)
 
 ---
 
@@ -649,6 +971,6 @@ Este proyecto fue desarrollado como parte de mi aprendizaje de desarrollo backen
 
 **Desarrollado por:** Juan Carlos López Moreno
 
-**Portafolio:** https://juancholopez.netlify.app/
+**Portafolio:** <https://juancholopez.netlify.app/>
 
 **Propósito:** Proyecto de aprendizaje y demostración de habilidades backend para aplicaciones a posiciones junior/semi-senior en desarrollo web.

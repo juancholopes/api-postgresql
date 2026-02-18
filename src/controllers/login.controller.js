@@ -4,10 +4,8 @@ import jwt from "jsonwebtoken";
 
 // Función para iniciar sesión de un usuario
 const loginUser = async (req, res) => {
-  // Extraemos el email y la contraseña del request body
   const { email, password } = req.body;
 
-  // Validamos que ambos existan
   if (!email || !password) {
     return res.status(400).json({
       success: false,
@@ -16,8 +14,8 @@ const loginUser = async (req, res) => {
   }
 
   try {
-    // Buscamos el usuario por email
-    const user = await User.findOne({ where: { email } });
+    const normalizedEmail = email.toLowerCase();
+    const user = await User.findOne({ where: { email: normalizedEmail } });
     if (!user) {
       return res.status(401).json({
         success: false,

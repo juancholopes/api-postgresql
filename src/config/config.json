@@ -1,11 +1,11 @@
 {
   "development": {
     "username": "postgres",
-    "password": "password",
+    "password": "159823",
     "database": "authdb",
     "host": "localhost",
-    "dialect": "sqlite",
-    "storage": "./database.sqlite"
+    "port": 5432,
+    "dialect": "postgres"
   },
   "test": {
     "username": "postgres",

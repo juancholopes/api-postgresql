@@ -14,7 +14,8 @@ const registerUser = async (req, res) => {
             });
         }
 
-        const existingUser = await User.findOne({ where: { email } }); 
+        const normalizedEmail = email.toLowerCase();
+        const existingUser = await User.findOne({ where: { email: normalizedEmail } }); 
         if (existingUser) {
             return res.status(409).json({
                 success: false,
@@ -27,7 +28,7 @@ const registerUser = async (req, res) => {
 
         const newUser = await User.create({
             name,
-            email,
+            email: normalizedEmail,
             password: hashedPassword,
             phone: phone || null
         });

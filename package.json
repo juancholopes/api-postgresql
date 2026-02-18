@@ -5,7 +5,12 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=test jest",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage",
+    "test:verbose": "cross-env NODE_ENV=test jest --verbose",
+    "test:db:create": "sudo -u postgres createdb authdb_test",
+    "test:db:drop": "sudo -u postgres dropdb authdb_test"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +27,12 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "sequelize-cli": "^6.6.3"
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
+    "babel-jest": "^30.2.0",
+    "cross-env": "^10.1.0",
+    "jest": "^30.2.0",
+    "sequelize-cli": "^6.6.3",
+    "supertest": "^7.2.2"
   }
 }

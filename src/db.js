@@ -4,16 +4,16 @@ dotenv.config(); // Carga las variables de entorno desde el archivo .env
 
 // Configuramos la conexión de la base de datos con Sequelize
 const sequelize = new Sequelize(
-    process.env.DB_NAME, // Nombre de la base de datos
-    process.env.DB_USER, // Usuario de la base de datos
-    process.env.DB_PASSWORD, // Contraseña del usuario
-    {
-        host: process.env.DB_HOST, // Host donde se encuentra la base de datos
-        port: process.env.DB_PORT, // Puerto de PostgreSQL
-        dialect: process.env.DB_DIALECT || 'postgres', // Especifica el dialecto (postgres por defecto)
-        storage: process.env.DB_DIALECT === 'sqlite' ? './database.sqlite' : undefined, // Para SQLite
-        logging: false, // Desactiva los logs SQL en consola 
-    }
+  process.env.DB_NAME, // Nombre de la base de datos
+  process.env.DB_USER, // Usuario de la base de datos
+  process.env.DB_PASSWORD, // Contraseña del usuario
+  {
+    host: process.env.DB_HOST, // Host donde se encuentra la base de datos
+    port: process.env.DB_PORT, // Puerto de PostgreSQL
+    dialect: process.env.DB_DIALECT || 'postgres', // Especifica el dialecto (postgres por defecto)
+    storage: process.env.DB_DIALECT === 'sqlite' ? './database.sqlite' : undefined, // Para SQLite
+    logging: false, // Desactiva los logs SQL en consola 
+  }
 );
 
 export default sequelize; // Exporta la instancia de Sequelize para que pueda ser utilizada en otros archivos
