@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Database files
+database.sqlite
+*.sqlite
+
+# Coverage and testing
+coverage/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.github/
+.gitignore
+
+# Docker
+docker-compose*.yml
+
+# Documentation (not needed in image)
+README.md
+DOCKER.md
