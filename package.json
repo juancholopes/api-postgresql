@@ -10,7 +10,17 @@
     "test:coverage": "cross-env NODE_ENV=test jest --coverage",
     "test:verbose": "cross-env NODE_ENV=test jest --verbose",
     "test:db:create": "sudo -u postgres createdb authdb_test",
-    "test:db:drop": "sudo -u postgres dropdb authdb_test"
+    "test:db:drop": "sudo -u postgres dropdb authdb_test",
+    "docker:dev": "docker compose up --build",
+    "docker:dev:down": "docker compose down",
+    "docker:test": "docker compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from api-test",
+    "docker:test:down": "docker compose -f docker-compose.test.yml down -v",
+    "docker:prod": "docker compose -f docker-compose.prod.yml up --build -d",
+    "docker:prod:down": "docker compose -f docker-compose.prod.yml down",
+    "docker:logs": "docker compose logs -f",
+    "docker:clean": "docker compose down -v --rmi local && docker compose -f docker-compose.test.yml down -v --rmi local",
+    "docker:backup": "./docker/scripts/backup.sh",
+    "docker:restore": "./docker/scripts/restore.sh"
   },
   "keywords": [],
   "author": "",
