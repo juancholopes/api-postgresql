@@ -104,7 +104,26 @@ src/
 
 ## Instalación y Configuración
 
-### Requisitos Previos
+### Opción 1: Con Docker (Recomendado) 🐳
+
+Requisitos: [Docker](https://docs.docker.com/get-docker/) v20.10+
+
+```bash
+# Clonar el repositorio
+git clone <repository-url>
+cd api-postgresql
+
+# Iniciar todos los servicios (API + PostgreSQL)
+npm run docker:dev
+```
+
+La API estará disponible en `http://localhost:3001`. Las migraciones se ejecutan automáticamente.
+
+Para más detalles sobre Docker, ver [DOCKER.md](DOCKER.md).
+
+### Opción 2: Sin Docker (Manual)
+
+#### Requisitos Previos
 
 - **Node.js** v18 o superior
 - **PostgreSQL** v12 o superior

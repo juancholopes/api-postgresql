@@ -1,0 +1,82 @@
+# Docker Compose - Producción
+# Uso: docker compose -f docker-compose.prod.yml up -d
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: authdb-prod
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME:-authdb}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD es requerida}"
+    volumes:
+      - pgdata-prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ${DB_NAME:-authdb}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - internal
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.50"
+
+  api:
+    build:
+      context: .
+      target: production
+    container_name: authapi-prod
+    restart: always
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: "${DB_PASSWORD:?DB_PASSWORD es requerida}"
+      DB_NAME: ${DB_NAME:-authdb}
+      DB_DIALECT: postgres
+      DB_PORT: 5432
+      JWT_SECRET: "${JWT_SECRET:?JWT_SECRET es requerido}"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.50"
+
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: auth-nginx
+    restart: always
+    ports:
+      - "${NGINX_PORT:-80}:80"
+      - "${NGINX_SSL_PORT:-443}:443"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # Descomentar para SSL/TLS:
+      # - ./docker/nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - api
+    networks:
+      - internal
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: "0.25"
+
+volumes:
+  pgdata-prod:
+    driver: local
+
+networks:
+  internal:
+    driver: bridge

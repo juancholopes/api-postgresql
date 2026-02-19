@@ -1,0 +1,46 @@
+# Docker Compose - Testing
+# Uso: docker compose -f docker-compose.test.yml up --abort-on-container-exit
+
+services:
+  db-test:
+    image: postgres:15-alpine
+    container_name: authdb-test
+    environment:
+      POSTGRES_DB: authdb_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_test_password
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d authdb_test"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    networks:
+      - test-network
+
+  api-test:
+    build:
+      context: .
+      target: development
+    container_name: authapi-test
+    environment:
+      NODE_ENV: test
+      DB_HOST: db-test
+      DB_USER: postgres
+      DB_PASSWORD: postgres_test_password
+      DB_NAME: authdb_test
+      DB_DIALECT: postgres
+      DB_PORT: 5432
+      JWT_SECRET: testsecretkey123
+    depends_on:
+      db-test:
+        condition: service_healthy
+    command: ["sh", "-c", "npx sequelize-cli db:migrate && npm test"]
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
