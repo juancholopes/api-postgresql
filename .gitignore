@@ -42,3 +42,7 @@ Thumbs.db
 
 # GitHub instructions
 .github/
+
+# Docker
+.env.production
+backups/
